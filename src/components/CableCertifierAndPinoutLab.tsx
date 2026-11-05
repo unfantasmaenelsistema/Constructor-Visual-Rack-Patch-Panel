@@ -272,7 +272,7 @@ export const CableCertifierAndPinoutLab: React.FC<CableCertifierAndPinoutLabProp
               id="certifier-outlet-select"
               value={selectedOutlet?.id || ''}
               onChange={(e) => setSelectedOutletId(e.target.value)}
-              className="bg-slate-900 border border-slate-700 rounded px-2.5 py-1 text-xs font-mono text-slate-100 focus:outline-none focus:border-sky-400"
+              className="w-full sm:w-auto max-w-full min-w-0 bg-slate-900 border border-slate-700 rounded px-2.5 py-1 text-xs font-mono text-slate-100 focus:outline-none focus:border-sky-400"
             >
               {wallOutlets.map((w) => (
                 <option key={w.id} value={w.id}>

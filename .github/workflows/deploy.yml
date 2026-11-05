@@ -28,7 +28,10 @@ jobs:
           cache: "npm"
 
       - name: Instalar dependencias
-        run: npm install
+        run: npm ci
+
+      - name: Comprobar tipos
+        run: npm run lint
 
       - name: Compilar proyecto para producción (Vite)
         run: npm run build

@@ -406,8 +406,8 @@ export const SCENARIOS: ScenarioDefinition[] = [
     ],
     optimalRack: [
       { templateId: 'ups_2u', bottomU: 1 },
-      { templateId: 'server_2u', bottomU: 3 },
-      { templateId: 'fan_tray_1u', bottomU: 5 },
+      { templateId: 'fan_tray_1u', bottomU: 3 }, // Ventilación entre SAI y servidor (evita apilamiento térmico)
+      { templateId: 'server_2u', bottomU: 4 },
       { templateId: 'pdu_1u', bottomU: 6 },
       { templateId: 'switch_24p', bottomU: 7 },
       { templateId: 'cable_manager_1u', bottomU: 8 },
@@ -512,8 +512,8 @@ export const SCENARIOS: ScenarioDefinition[] = [
     messyInitialRack: [],
     optimalRack: [
       { templateId: 'ups_2u', bottomU: 1 },
-      { templateId: 'server_2u', bottomU: 3 },
-      { templateId: 'fan_tray_1u', bottomU: 5 },
+      { templateId: 'fan_tray_1u', bottomU: 3 }, // Ventilación entre SAI y servidor (evita apilamiento térmico)
+      { templateId: 'server_2u', bottomU: 4 },
       { templateId: 'pdu_1u', bottomU: 6 },
       { templateId: 'switch_24p', bottomU: 7 },
       { templateId: 'cable_manager_1u', bottomU: 8 },
