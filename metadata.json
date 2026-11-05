@@ -2,5 +2,5 @@
   "name": "Constructor Visual de Rack 19\" y Patch Panel — Un Fantasma en el Sistema",
   "description": "Simulador interactivo y didáctico de armario rack de 19 pulgadas, cableado estructurado, patch panel, código de colores y gestión térmica.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": []
 }

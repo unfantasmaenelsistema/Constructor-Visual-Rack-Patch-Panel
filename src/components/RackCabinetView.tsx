@@ -146,7 +146,10 @@ export const RackCabinetView: React.FC<RackCabinetViewProps> = ({
   const pendingTemplate = pendingTemplateId ? getTemplateById(pendingTemplateId) : undefined;
 
   return (
-    <div className="relative select-none" ref={containerRef}>
+    // En pantallas estrechas el bastidor mantiene una anchura mínima y se desplaza en horizontal
+    // (como un plano); el SVG de latiguillos usa coordenadas relativas a containerRef y no se desalinea.
+    <div className="overflow-x-auto max-w-full">
+    <div className="relative select-none min-w-[680px]" ref={containerRef}>
       {/* Marco metálico superior del armario Rack 19" con selector Frontal / Trasero */}
       <div className="bg-slate-900 border-2 border-slate-700 rounded-t-xl px-3 sm:px-4 py-2.5 flex flex-wrap items-center justify-between gap-2 shadow-lg">
         <div className="flex items-center gap-2.5">
@@ -229,7 +232,7 @@ export const RackCabinetView: React.FC<RackCabinetViewProps> = ({
                   }
                   setDraggedDeviceId(null);
                 }}
-                className={`grid grid-cols-[54px_1fr_76px] items-stretch rounded-md transition-colors ${
+                className={`grid grid-cols-[54px_minmax(0,1fr)_76px] items-stretch rounded-md transition-colors ${
                   uHeight === 2 ? 'min-h-[116px]' : 'min-h-[56px]'
                 } ${
                   isDragTarget
@@ -519,7 +522,7 @@ export const RackCabinetView: React.FC<RackCabinetViewProps> = ({
 
                           {/* 3. SWITCH GESTIONABLE 24 PUERTOS (1U Frontal) */}
                           {tpl?.category === 'switch' && (
-                            <div className="w-full flex items-center justify-between gap-2 py-0.5 z-20 overflow-x-auto">
+                            <div className="w-full min-w-0 flex items-center justify-between gap-2 py-0.5 z-20">
                               <div className="font-mono text-[10px] text-sky-400 shrink-0 pr-1">
                                 <div>L2+ PoE+</div>
                                 <div className="text-[9px] text-slate-400">
@@ -527,8 +530,10 @@ export const RackCabinetView: React.FC<RackCabinetViewProps> = ({
                                 </div>
                               </div>
 
-                              <div className="flex items-center gap-1 flex-wrap sm:flex-nowrap">
-                                {Array.from({ length: 24 }, (_, idx) => idx + 1).map((portNum) => {
+                              <div className="flex flex-wrap items-center justify-end gap-x-2 gap-y-1 min-w-0">
+                                {[0, 12].map((offset) => (
+                                <div key={offset} className="flex flex-nowrap items-center gap-1">
+                                {Array.from({ length: 12 }, (_, idx) => offset + idx + 1).map((portNum) => {
                                   const portCables = getCablesForPort(devAtU.instanceId, portNum);
                                   const isConnected = portCables.length > 0;
                                   const isSelected =
@@ -559,7 +564,7 @@ export const RackCabinetView: React.FC<RackCabinetViewProps> = ({
                                           : `Switch Boca #${portNum} (Acceso LAN / PoE+)`
                                       }
                                       className={`w-6 h-6 rounded-xs border font-mono text-[9px] font-bold flex items-center justify-center transition-transform cursor-pointer ${
-                                        portNum === 13 || portNum === 23 ? 'ml-1.5' : ''
+                                        portNum === 23 ? 'ml-1.5' : ''
                                       } ${
                                         isSelected
                                           ? 'ring-2 ring-white border-sky-300 bg-sky-700 text-white scale-115 z-30'
@@ -579,13 +584,15 @@ export const RackCabinetView: React.FC<RackCabinetViewProps> = ({
                                     </button>
                                   );
                                 })}
+                                </div>
+                                ))}
                               </div>
                             </div>
                           )}
 
                           {/* 4. PATCH PANEL CAT6 24 BOCAS (1U Frontal) */}
                           {tpl?.category === 'patch_panel' && (
-                            <div className="w-full flex items-center justify-between gap-2 py-0.5 z-20 overflow-x-auto">
+                            <div className="w-full min-w-0 flex items-center justify-between gap-2 py-0.5 z-20">
                               <div className="font-mono text-[10px] text-indigo-300 shrink-0 pr-1">
                                 <div>PATCH CAT6</div>
                                 <div className="text-[9px] text-slate-400">
@@ -593,8 +600,10 @@ export const RackCabinetView: React.FC<RackCabinetViewProps> = ({
                                 </div>
                               </div>
 
-                              <div className="flex items-center gap-1 flex-wrap sm:flex-nowrap">
-                                {Array.from({ length: 24 }, (_, idx) => idx + 1).map((portNum) => {
+                              <div className="flex flex-wrap items-center justify-end gap-x-2 gap-y-1 min-w-0">
+                                {[0, 12].map((offset) => (
+                                <div key={offset} className="flex flex-nowrap items-center gap-1">
+                                {Array.from({ length: 12 }, (_, idx) => offset + idx + 1).map((portNum) => {
                                   const outlet = wallOutlets.find(
                                     (w) => w.patchPanelPort === portNum
                                   );
@@ -636,8 +645,6 @@ export const RackCabinetView: React.FC<RackCabinetViewProps> = ({
                                           : `Boca #${portNum} (Libre en pared)`
                                       }
                                       className={`w-6 h-6 rounded-xs border font-mono text-[9px] font-bold flex flex-col items-center justify-center transition-all cursor-pointer relative ${
-                                        portNum === 13 ? 'ml-1.5' : ''
-                                      } ${
                                         isSelected || isHighlightedOutlet
                                           ? 'ring-2 ring-amber-300 border-white bg-indigo-700 text-white scale-115 z-30'
                                           : isConnected
@@ -665,13 +672,15 @@ export const RackCabinetView: React.FC<RackCabinetViewProps> = ({
                                     </button>
                                   );
                                 })}
+                                </div>
+                                ))}
                               </div>
                             </div>
                           )}
 
                           {/* 5. ROUTER / FIREWALL PERIMETRAL (1U Frontal) */}
                           {tpl?.category === 'router' && (
-                            <div className="w-full flex items-center justify-between gap-3 py-0.5 z-20">
+                            <div className="w-full min-w-0 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 py-0.5 z-20">
                               <div className="flex items-center gap-3">
                                 <span className="font-mono text-[10px] text-rose-400 font-semibold">
                                   FIREWALL UTM · FRONTERA WAN
@@ -681,8 +690,8 @@ export const RackCabinetView: React.FC<RackCabinetViewProps> = ({
                                 </span>
                               </div>
 
-                              <div className="flex items-center gap-1.5">
-                                <span className="font-mono text-[10px] text-slate-400 mr-1">
+                              <div className="flex flex-wrap items-center gap-1.5">
+                                <span className="font-mono text-[10px] text-slate-400 mr-1 hidden sm:inline">
                                   Bocas (1-2 WAN/Trunk Rojo):
                                 </span>
                                 {Array.from({ length: 8 }, (_, idx) => idx + 1).map((portNum) => {
@@ -1066,6 +1075,7 @@ export const RackCabinetView: React.FC<RackCabinetViewProps> = ({
         </div>
         <div className="w-12 h-3 bg-slate-800 border-x border-b border-slate-600 rounded-b" />
       </div>
+    </div>
     </div>
   );
 };

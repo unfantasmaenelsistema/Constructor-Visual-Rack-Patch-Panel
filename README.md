@@ -66,8 +66,8 @@ Permite al alumnado practicar de forma visual, realista y sin riesgo físico el 
 | :--- | :---: | :--- | :--- |
 | **Cabeza (Superior)** | `U11 – U12` | Router / Firewall UTM, Panel Ciego | Cercanía a la acometida superior de fibra óptica / WAN y rápida visualización del enlace crítico. |
 | **Distribución Alta** | `U7 – U10` | Patch Panel 24p, Pasahilos 1U, Switch 24p PoE+ | Recibe los mazos de cableado estructurado horizontal y organiza los latiguillos sin obstruir rejillas. |
-| **Zona Media** | `U4 – U6` | Bandeja de Ventilación 1U, PDU Eléctrica 1U | Extrae el calor ascendente por convección de la zona inferior y distribuye energía protegida. |
-| **Zona Inferior** | `U3 – U4` | Servidor Rack 2U Dual-Xeon / NAS (`18,2 kg`) | Segundo elemento más pesado; requiere proximidad a la base y ventilación superior. |
+| **Zona Media** | `U6` | PDU Eléctrica 1U | Distribuye la energía protegida por el SAI al resto de equipos. |
+| **Zona Inferior** | `U3 – U5` | Bandeja de Ventilación 1U (`U3`) + Servidor Rack 2U Dual-Xeon / NAS (`18,2 kg`, `U4–U5`) | Segundo elemento más pesado; va cerca de la base, separado del SAI por la bandeja de ventilación para evitar el apilamiento térmico. |
 | **Base (Suelo)** | `U1 – U2` | SAI / UPS Online 3000VA (`28,5 kg`) | **Obligatorio en la base** por el elevado peso de sus baterías para rebajar el centro de gravedad. |
 
 ### 2. Codificación de Colores de Latiguillos (ANSI/TIA-606-C)
@@ -84,15 +84,15 @@ Permite al alumnado practicar de forma visual, realista y sin riesgo físico el 
 
 ## Instalación Local y Ejecución
 
-Requisitos previos: **Node.js 18+** (recomendado Node.js 20 o 22) y **npm**.
+Requisitos previos: **Node.js 20.19+** (recomendado Node.js 22) y **npm**.
 
 ```bash
 # 1. Clonar el repositorio
-git clone https://github.com/tu-usuario/constructor-rack-patch-panel.git
-cd constructor-rack-patch-panel
+git clone https://github.com/unfantasmaenelsistema/Constructor-Visual-Rack-Patch-Panel.git
+cd Constructor-Visual-Rack-Patch-Panel
 
 # 2. Instalar dependencias
-npm install
+npm ci
 
 # 3. Iniciar servidor de desarrollo (http://localhost:3000)
 npm run dev
@@ -110,7 +110,7 @@ El proyecto ya está preconfigurado con rutas relativas (`base: './'` en `vite.c
 1. Sube este repositorio a tu cuenta de GitHub (`git push origin main`).
 2. En tu repositorio de GitHub, entra en **Settings → Pages**.
 3. En la sección **Build and deployment → Source**, selecciona **GitHub Actions**.
-4. Cada vez que hagas un `push` a la rama `main`, GitHub compilará automáticamente la aplicación y la publicará en `https://tu-usuario.github.io/nombre-del-repo/`.
+4. Cada vez que hagas un `push` a la rama `main`, GitHub compilará automáticamente la aplicación y la publicará en https://unfantasmaenelsistema.github.io/Constructor-Visual-Rack-Patch-Panel/.
 
 ---
 

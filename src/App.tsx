@@ -248,7 +248,7 @@ export default function App() {
       summary:
         'Reto generado dinámicamente con asignación única de bocas en el Patch Panel y hardware desubicado. Ordena el rack según su peso/temperatura y parchea todos los servicios.',
       objectives: [
-        'Bajar el SAI (28.5 kg) a U1–U2 y situar el Servidor 2U en U3–U4 con ventilación en U5.',
+        'Bajar el SAI (28.5 kg) a U1–U2, intercalar la bandeja de ventilación en U3 y situar el Servidor 2U en U4–U5.',
         'Colocar el Router/Firewall en cabeza (U11) e intercalar Pasahilos 1U entre Patch Panel y Switch.',
         'Parchear las 6 rosetas generadas aleatoriamente, el Servidor (Verde) y el Uplink WAN (Rojo).',
       ],
@@ -274,8 +274,8 @@ export default function App() {
       ],
       optimalRack: [
         { templateId: 'ups_2u', bottomU: 1 },
-        { templateId: 'server_2u', bottomU: 3 },
-        { templateId: 'fan_tray_1u', bottomU: 5 },
+        { templateId: 'fan_tray_1u', bottomU: 3 }, // Ventilación entre SAI y servidor (evita apilamiento térmico)
+        { templateId: 'server_2u', bottomU: 4 },
         { templateId: 'pdu_1u', bottomU: 6 },
         { templateId: 'switch_24p', bottomU: 7 },
         { templateId: 'cable_manager_1u', bottomU: 8 },
@@ -627,13 +627,13 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
       {/* TOP BAR CONTRACT: 3 Zonas Limpias separadas por gap-8 */}
-      <header className="flex items-center justify-between gap-8 px-4 sm:px-6 py-3 bg-slate-900/95 border-b border-slate-800 sticky top-0 z-40 backdrop-blur no-print">
+      <header className="flex items-center justify-between gap-3 sm:gap-8 px-4 sm:px-6 py-3 bg-slate-900/95 border-b border-slate-800 sticky top-0 z-40 backdrop-blur no-print">
         {/* Zona 1: Marca (1 línea con logo del autor) */}
         <a
           href="https://www.unfantasmaenelsistema.com/"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-3 text-base font-bold tracking-tight text-slate-100 hover:text-sky-300 transition-colors whitespace-nowrap shrink-0"
+          className="flex items-center gap-3 min-w-0 text-base font-bold tracking-tight text-slate-100 hover:text-sky-300 transition-colors whitespace-nowrap"
         >
           <img
             src="./assets/aistudio/icono_81a3db5b.png"
@@ -644,7 +644,7 @@ export default function App() {
               e.currentTarget.style.display = 'none';
             }}
           />
-          <span className="font-display">Un Fantasma en el Sistema · RackLab 19&quot;</span>
+          <span className="font-display truncate">Un Fantasma en el Sistema · RackLab 19&quot;</span>
         </a>
 
         {/* Zona 2: 4 enlaces de navegación concisos de una sola línea */}
@@ -686,8 +686,8 @@ export default function App() {
             rel="noopener noreferrer"
             className="px-3.5 py-2 text-xs font-semibold text-white bg-sky-600 hover:bg-sky-500 rounded-lg transition-colors flex items-center gap-1.5 whitespace-nowrap shrink-0 shadow-sm"
           >
-            <span>unfantasmaenelsistema.com</span>
-            <ExternalLink className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">unfantasmaenelsistema.com</span>
+            <ExternalLink className="w-3.5 h-3.5" aria-label="Web oficial" />
           </a>
         </div>
       </header>
